@@ -1,13 +1,51 @@
 const allbtn = document.getElementById("allbtn");
 const openbtn = document.getElementById("openbtn");
 const closebtn = document.getElementById("closebtn");
+let Open = [];
+let Closed = [];
+// let status = "allbtn";
 
-let status = allbtn;
+
+function toggleStyle(id){
+    allbtn.classList.remove('btn-primary');
+    openbtn.classList.remove('btn-primary');
+    closebtn.classList.remove('btn-primary');
+
+    allbtn.classList.add('btn-soft');
+    openbtn.classList.add('btn-soft');
+    closebtn.classList.add('btn-soft');
+
+    const status = document.getElementById(id);
+
+    status.classList.remove('btn-soft');
+    status.classList.add('btn-primary');
+};
+
+allbtn.addEventListener("click", () => {
+    toggleStyle("allbtn");
+    display([...Open, ...Closed]);
+});
+
+openbtn.addEventListener("click", () => {
+    toggleStyle("openbtn");
+    display(Open);
+});
+
+closebtn.addEventListener("click", () => {
+    toggleStyle("closebtn");
+    display(Closed);
+});
+
 
 const loadIssues = () => {
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then((res) => res.json())
-        .then((data) => display(data.data));
+        .then((data) => {
+            const item = data.data;
+            Open = item.filter(item => item.status === "open");
+            Closed = item.filter(item => item.status === "closed");
+            display(item);
+        });
 };
 
 const display = (issues) => {
@@ -24,7 +62,7 @@ const display = (issues) => {
         cardDiv.innerHTML = `
             <div class="flex justify-between items-center">
                 <img src="${issue.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}">
-                <p class="px-3 py-1 ${
+                <p class="px-5 py-1 ${
                     issue.priority === "high"
                         ? "bg-red-200 text-red-600"
                         : issue.priority === "medium"
@@ -41,14 +79,13 @@ const display = (issues) => {
             <div class="flex items-center gap-6"></div>
 
             <div class="border-t border-gray-300">
-                <div class="mt-4">
-                    <p class="text-p">
-                        ${issue.author || "N/A"} <br>
-                        ${issue.createdAt || "N/A"} <br>
-                        ${issue.assignee || "N/A"} <br>
-                        ${issue.updatedAt || "N/A"}
-                    </p>
-                </div>
+                 <div class = "mt-4">
+<p class="text-p text-[#64748B]">
+#1 by ${issue.author || "N/A"} <br>
+${issue.createdAt ? new Date(issue.createdAt).toLocaleDateString() : "N/A"} <br>
+${issue.assignee || "N/A"} <br>
+${issue.updatedAt ? new Date(issue.updatedAt).toLocaleDateString() : "N/A"}
+</p>                </div>
             </div>
         `;
 
