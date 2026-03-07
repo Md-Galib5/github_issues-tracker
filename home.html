@@ -9,6 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
      <link rel="stylesheet" href="home.css">
+     <script src="./script.js"></script>
 </head>
 <body>
     <header class="bg-white">
@@ -46,11 +47,38 @@
     </header>
 
     <main>
-        <section>
-            <div>
-                <button></button>
+        <section class="mt-10 w-9/12 mx-auto bg-white rounded-2xl">
+            <div class="flex gap-2 p-5">
+                <button id="allbtn"class="btn btn-primary ml-5 px-10">All</button>
+                <button id="openbtn" class="btn btn-primary px-10">Open</button>
+                <button id="closebtn" class="btn btn-primary px-10">Closed</button>
             </div>
         </section>
+
+        <section class="mt-10 w-9/12 mx-auto bg-white rounded-2xl">
+            <div class="flex justify-between items-center">
+            <div class="flex items-center gap-2 p-5">
+            <div>
+                <img class="bg-[#ece4ff] p-2 rounded-[50%] ml-5" src="./assets/Aperture.png">
+            </div>
+            <div>
+                <h3 class="font-semibold text-2xl"><span>0</span> Issues</h3>
+                <p class="text-[#64748B]">Track and manage your project issues</p>
+            </div>
+            </div>
+            <div>
+                <img class="mr-5" src="./assets/Frame 2087325656.png">
+            </div>
+            </div>
+        </section>
+
+        <!-- <section class="mt-10 w-9/12 mx-auto bg-white rounded-2xl">
+        
+        </section> -->
+        <section id="card-section" class="w-9/12 my-5 mx-auto grid gap-4 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+
+        </section>
+
     </main>
 </body>
 </html>
