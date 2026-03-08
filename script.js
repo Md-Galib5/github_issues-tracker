@@ -70,10 +70,10 @@ const loadIssues = () => {
 const manageSpiner = (isclicked) => {
     if(isclicked == true){
         document.getElementById("spiner").classList.remove("hidden");
-        document.getElementById("container").classList.add("hidden");
+        document.getElementById("card-section").classList.add("hidden");
     }
     else{
-        document.getElementById("container").classList.remove("hidden");
+        document.getElementById("card-section").classList.remove("hidden");
         document.getElementById("spiner").classList.add("hidden");
     }
 };
