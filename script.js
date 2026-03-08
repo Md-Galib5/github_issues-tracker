@@ -92,6 +92,56 @@ function calculate(){
 };
 calculate();
 
+
+const levels = (labels) => {
+    let labelHtml = "";
+
+    for (let label of labels){
+
+        if (label === "bug"){
+            labelHtml += `
+            <p class="inline-flex items-center gap-1 h-6 px-4 py-4 text-s bg-red-200 text-red-600 rounded-full">
+                <i class="fa-solid fa-bug"></i> Bug
+            </p>
+            `;
+        }
+
+        else if (label === "help wanted"){
+            labelHtml += `
+            <p class="inline-flex items-center gap-1 h-6 px-2 py-4 text-s bg-yellow-200 text-yellow-700 rounded-full">
+                <i class="fa-brands fa-chrome"></i> Help Wanted
+            </p>
+            `;
+        }
+
+        else if (label === "enhancement"){
+            labelHtml += `
+            <p class="inline-flex items-center gap-1 h-6 px-2 py-4 text-s bg-green-200 text-green-700 rounded-full">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Enhancement
+            </p>
+            `;
+        }
+
+        else if (label === "documentation"){
+            labelHtml += `
+            <p class="inline-flex items-center gap-1 h-6 px-2 py-4 text-s bg-blue-200 text-blue-700 rounded-full">
+                <i class="fa-solid fa-file"></i> Documentation
+            </p>
+            `;
+        }
+
+        else if (label === "good first issue"){
+            labelHtml += `
+            <p class="inline-flex items-center gap-1 h-6 px-3 py-4 text-s bg-pink-200 text-pink-600 rounded-full">
+                <i class="fa-solid fa-clover"></i> Good First Issue
+            </p>
+            `;
+        }
+    }
+
+    return labelHtml;
+};
+
 const display = (issues) => {
     const card = document.getElementById("card-section");
     card.innerHTML = "";
@@ -102,7 +152,7 @@ const display = (issues) => {
         cardDiv.className = `bg-white p-10 shadow rounded-2xl space-y-4 border-t-4 ${
             issue.status === "open" ? "border-green-500" : "border-purple-500"
         }`;
-
+         labelsHTML = levels(issue.labels);
         cardDiv.innerHTML = `
             <div class="flex justify-between items-center">
                 <img src="${issue.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}">
@@ -119,7 +169,9 @@ const display = (issues) => {
                 <h3 class="text-xl font-bold text-prim">${issue.title}</h3>
                 <p class="text-p line-clamp-2">${issue.description}</p>
             </div>
-
+                 <div class="flex items-center gap-2 flex-wrap">
+                  ${labelsHTML}
+                </div>
             <div class="flex items-center gap-6"></div>
 
             <div class="border-t border-gray-300">
