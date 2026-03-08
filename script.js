@@ -169,7 +169,7 @@ const display = (issues) => {
          labelsHTML = levels(issue.labels);
         cardDiv.innerHTML = `
             <div class="flex justify-between items-center">
-                <img src="${issue.status === "open" ? "/assets/Open-Status.png" : "/assets/Closed- Status .png"}">
+                <img src="${issue.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}">
                 <p class="px-5 py-1 ${
                     issue.priority === "high"
                         ? "bg-red-200 text-red-600"
