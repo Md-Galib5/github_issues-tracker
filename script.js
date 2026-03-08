@@ -42,7 +42,9 @@ function toggleStyle(id){
 
 allbtn.addEventListener("click", () => {
     toggleStyle("allbtn");
+    // const combined = Open.concat(Closed);
     display([...Open, ...Closed]);
+    // display([combined]);
 });
 
 openbtn.addEventListener("click", () => {
