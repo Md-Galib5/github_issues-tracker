@@ -4,7 +4,24 @@ const closebtn = document.getElementById("closebtn");
 let Open = [];
 let Closed = [];
 // let status = "allbtn";
+let currentStatus = "allbtn";
+const totalcount = document.getElementById("count");
+const cardsection = document.getElementById("card-section");
+const searchInput = document.getElementById("searchInput");
 
+
+searchInput.addEventListener("input", (e) => {
+    const searchText = e.target.value.trim().toLowerCase();
+
+    if (searchText === "") {
+        loadIssues();
+        return;
+    }
+
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`)
+        .then(res => res.json())
+        .then(data => display(data.data));
+});
 
 function toggleStyle(id){
     allbtn.classList.remove('btn-primary');
@@ -16,6 +33,7 @@ function toggleStyle(id){
     closebtn.classList.add('btn-soft');
 
     const status = document.getElementById(id);
+    currentStatus = id;
 
     status.classList.remove('btn-soft');
     status.classList.add('btn-primary');
@@ -38,6 +56,7 @@ closebtn.addEventListener("click", () => {
 
 
 const loadIssues = () => {
+    manageSpiner(true);
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
         .then((res) => res.json())
         .then((data) => {
@@ -47,6 +66,31 @@ const loadIssues = () => {
             display(item);
         });
 };
+
+const manageSpiner = (isclicked) => {
+    if(isclicked == true){
+        document.getElementById("spiner").classList.remove("hidden");
+        document.getElementById("container").classList.add("hidden");
+    }
+    else{
+        document.getElementById("container").classList.remove("hidden");
+        document.getElementById("spiner").classList.add("hidden");
+    }
+};
+
+function calculate(){
+    totalcount.innerText = cardsection.children.length;
+    if(currentStatus === 'allbtn'){
+        totalcount.innerText =  cardsection.children.length;
+    }
+    else if (currentStatus === "openbtn"){
+        totalcount.innerText = Open.length;
+    }
+    else if (currentStatus === "closebtn"){
+        totalcount.innerText = Closed.length;
+    }
+};
+calculate();
 
 const display = (issues) => {
     const card = document.getElementById("card-section");
@@ -90,7 +134,9 @@ ${issue.updatedAt ? new Date(issue.updatedAt).toLocaleDateString() : "N/A"}
         `;
 
         card.appendChild(cardDiv);
-    }
+        manageSpiner(false);
+    };
+    calculate();
 };
 
 loadIssues();

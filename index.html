@@ -9,14 +9,14 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
      <link rel="stylesheet" href="style.css">
-     
+
 </head>
-<body class="min-h-screen w-[520px] mx-auto bg-base-200 font-geist">
-        <div class="w-[456px] mx-auto pt-32">
+<body class="min-h-screen max-w-md mx-auto font-geist shadow-lg">
+        <div class="w-full mx-auto pt-32">
             <img src="./assets/Frame 2087325645.png">
         </div>
 
-        <div class="w-[456px] mx-auto">
+        <div class="card bg-base-100 w-full max-w-sm shrink-0 shadow-md mx-auto rounded-2xl mt-5">
             <fieldset class="fieldset bg-base-200 border-base-300 border rounded-box p-4">
   <legend class="fieldset-legend"></legend>
 
@@ -29,6 +29,13 @@
   <button id="login-btn" class="btn btn-primary mt-4">Sign in</button>
 </fieldset>
         </div>
+
+         <div class="text-center mb-4">
+                <p class="text-[#64748B] mb-4 mt-5">Demo Credentials:</p>
+                <p class="text-[#1F2937]"><span class="font-bold mb-2">Username:</span> admin</p>
+                <p class="text-[#1F2937]"><span class="font-bold">Password:</span> admin123</p>
+            </div>
+
        <script src="./login.js"></script>  
 </body>
 </html>
