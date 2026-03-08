@@ -8,7 +8,8 @@ let currentStatus = "allbtn";
 const totalcount = document.getElementById("count");
 const cardsection = document.getElementById("card-section");
 const searchInput = document.getElementById("searchInput");
-
+const modal = document.getElementById("issue-modal");
+    const modalelement = document.getElementById("modal-element");
 
 searchInput.addEventListener("input", (e) => {
     const searchText = e.target.value.trim().toLowerCase();
@@ -142,12 +143,23 @@ const levels = (labels) => {
     return labelHtml;
 };
 
+const singleIssues = (id) => {
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`)
+    .then((res) => res.json())
+    .then((json) => displayModal(json.data));
+};
+
+
 const display = (issues) => {
     const card = document.getElementById("card-section");
     card.innerHTML = "";
 
     for (let issue of issues) {
         const cardDiv = document.createElement("div");
+
+        cardDiv.addEventListener("click", () => {
+            singleIssues(issue.id);
+        });
 
         cardDiv.className = `bg-white p-10 shadow rounded-2xl space-y-4 border-t-4 ${
             issue.status === "open" ? "border-green-500" : "border-purple-500"
@@ -190,5 +202,43 @@ ${issue.updatedAt ? new Date(issue.updatedAt).toLocaleDateString() : "N/A"}
     };
     calculate();
 };
+
+
+const displayModal = (issue) => {
+    // const modal = document.getElementById("issue-modal");
+    // const modalelement = document.getElementById("modal-element");
+
+    const labelsHtml = levels(issue.labels);
+
+    modalelement.innerHTML = `
+    <div class="space-y-4 bg-white p-5">
+        <h3 class="text-xl text-prim font-semibold">${issue.title}</h3>
+        <div class="flex items-center gap-4">
+            <p class=" px-3 py-1 text-white text-center items-center ${issue.status === "open" ? "bg-green-700" : "bg-purple-500"} rounded-3xl">${issue.status === "open" ? issue.status + "ed" : issue.status}</p>
+            <p class="text-p"> •  ${issue.status === "open" ? "Opended" : "Closed"} by ${issue.author ? issue.author : "N/A"}  •  ${issue.createdAt ? new Date(issue.createdAt).toLocaleDateString() : "N/A"}</p>
+        </div>
+         <div class="flex items-center gap-2">
+            ${labelsHtml}
+        </div>
+        <p class="pcolor">${issue.description}</p>
+        <div class="flex justify-between bg-gray-100 rounded-xl p-3">
+      <div class="space-y-1.5">
+        <p class="pcolor">Assignee:</p>
+        <h4 class="font-semibold text-xl">${issue.assignee ? issue.assignee : "N/A"}</h4>
+      </div>
+      <div class="space-y-1.5">
+        <p class="pcolor">Prioty:</p>
+        <p class=" px-3 py-1 ${issue.priority === "high" ? "bg-red-200 text-red-600" : issue.priority === "medium" ?  "bg-yellow-200 text-yellow-600" : "bg-gray-200 text-gray-600"} rounded-3xl">${issue.priority}</p>
+      </div>
+    </div>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-primary">Close</button>
+          </form>
+        </div>
+    </div>
+    `;
+    modal.showModal();
+}
 
 loadIssues();
